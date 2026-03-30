@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Jesen 💗</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: "Comic Sans MS", cursive;
+}
+
+body{
+height:100vh;
+overflow:hidden;
+background: linear-gradient(135deg,#ffd6f6,#d6f0ff,#e5d6ff,#fff1d6);
+background-size:400% 400%;
+animation:bg 10s ease infinite;
+}
+
+@keyframes bg{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+/* login */
+
+.page{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+transition:1s;
+}
+
+.hidden{
+opacity:0;
+pointer-events:none;
+transform:scale(.9);
+}
+
+.card{
+background:rgba(255,255,255,.7);
+backdrop-filter: blur(10px);
+padding:30px;
+border-radius:25px;
+box-shadow:0 10px 30px rgba(0,0,0,.1);
+text-align:center;
+width:90%;
+max-width:320px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin:8px 0;
+border:none;
+border-radius:15px;
+outline:none;
+background:#fff;
+}
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:20px;
+background:#ffb6e6;
+color:white;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+.title{
+font-size:28px;
+margin-bottom:10px;
+color:#ff6ec7;
+text-align:center;
+}
+
+.subtitle{
+color:#666;
+margin-bottom:20px;
+}
+
+.main{
+text-align:center;
+padding:20px;
+}
+
+.text{
+font-size:18px;
+color:#555;
+min-height:120px;
+}
+
+.big{
+font-size:40px;
+color:#ff6ec7;
+margin-top:20px;
+}
+
+/* hearts */
+
+.heart{
+position:absolute;
+color:#ff8bd1;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{
+transform:translateY(100vh) scale(0);
+opacity:0;
+}
+50%{
+opacity:1;
+}
+100%{
+transform:translateY(-10vh) scale(1.5);
+opacity:0;
+}
+}
+
+/* sparkle */
+
+.sparkle{
+position:absolute;
+width:4px;
+height:4px;
+background:white;
+border-radius:50%;
+animation:spark 2s infinite;
+}
+
+@keyframes spark{
+0%{opacity:0; transform:scale(0)}
+50%{opacity:1}
+100%{opacity:0; transform:scale(0)}
+}
+
+/* popup */
+
+.popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+transition:.4s;
+z-index:10;
+}
+
+.popup.show{
+transform:translate(-50%,-50%) scale(1);
+}
+
+/* music btn */
+
+.music{
+position:fixed;
+top:20px;
+right:20px;
+background:white;
+width:40px;
+height:40px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+z-index:5;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- music -->
+<div class="music" onclick="toggleMusic()">🎵</div>
+<audio id="music" autoplay loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8e9a8a3a1.mp3?filename=romantic-love-11767.mp3">
+</audio>
+
+<!-- floating hearts -->
+<div id="hearts"></div>
+
+<!-- LOGIN -->
+<div class="page" id="login">
+<div class="card">
+<div class="title">Private Message for Jesen 💌</div>
+
+<input id="name" placeholder="Nama">
+<input id="pass" placeholder="Password" type="password">
+
+<button onclick="login()">Masuk 🤍</button>
+
+<p id="error" style="color:#ff6b9e;margin-top:10px"></p>
+</div>
+</div>
+
+<!-- MAIN -->
+<div class="page hidden" id="main">
+<div class="main">
+<div class="title">Hai Jesen 🐻💗</div>
+<div class="subtitle">Grey punya sesuatu yang ingin disampaikan…</div>
+
+<div class="text" id="text"></div>
+
+<br>
+<button onclick="klik()">Klik Aku Jesen 🐻</button>
+
+<div class="big hidden" id="end">
+Jesen 💗
+<br>
+<span style="font-size:18px">Grey sayang kamu</span>
+<br><br>
+<button onclick="akhir()">Pesan Terakhir</button>
+</div>
+
+</div>
+</div>
+
+<!-- popup -->
+<div class="popup" id="popup">
+Grey suka Jesen ❤️
+</div>
+
+<script>
+
+let benarNama="JESEN"
+let benarPass="ALDY GEOL"
+
+function login(){
+let n=document.getElementById("name").value
+let p=document.getElementById("pass").value
+
+if(n===benarNama && p===benarPass){
+
+document.getElementById("login").classList.add("hidden")
+document.getElementById("main").classList.remove("hidden")
+
+startText()
+
+}else{
+document.getElementById("error").innerText="Ups… ini hanya untuk Jesen yaa 🥺"
+}
+}
+
+/* typewriter */
+
+let messages=[
+"Hai Jesen...",
+"Aku cuma mau bilang sesuatu",
+"Kamu itu lucu banget",
+"Dan entah kenapa...",
+"Aku selalu senyum kalau ingat kamu",
+"Sejak ada kamu...",
+"Hariku jadi lebih cerah",
+"Dan hatiku jadi lebih hangat"
+]
+
+let i=0
+
+function startText(){
+type(messages[i])
+}
+
+function type(text){
+let el=document.getElementById("text")
+el.innerHTML=""
+let j=0
+
+let interval=setInterval(()=>{
+el.innerHTML+=text[j]
+j++
+
+if(j>=text.length){
+clearInterval(interval)
+i++
+if(i<messages.length){
+setTimeout(()=>type(messages[i]),1000)
+}else{
+document.getElementById("end").classList.remove("hidden")
+}
+}
+
+},50)
+}
+
+/* click */
+
+function klik(){
+document.getElementById("popup").classList.add("show")
+
+setTimeout(()=>{
+document.getElementById("popup").classList.remove("show")
+},2000)
+
+extraText()
+}
+
+/* extra text */
+
+function extraText(){
+let el=document.getElementById("text")
+el.innerHTML+= "<br><br>Aku suka cara kamu ketawa"
+setTimeout(()=>{el.innerHTML+= "<br>Aku suka cara kamu hadir"},800)
+setTimeout(()=>{el.innerHTML+= "<br>Aku suka semuanya tentang kamu"},1600)
+setTimeout(()=>{el.innerHTML+= "<br>Tanpa kamu sadar..."},2400)
+setTimeout(()=>{el.innerHTML+= "<br>Kamu spesial buat aku"},3200)
+}
+
+/* akhir */
+
+function akhir(){
+alert("Kalau Jesen baca ini…\nItu berarti Grey lagi kangen\nDan Grey selalu sayang Jesen 🤍")
+}
+
+/* hearts */
+
+setInterval(()=>{
+let heart=document.createElement("div")
+heart.className="heart"
+heart.innerHTML="❤"
+heart.style.left=Math.random()*100+"%"
+heart.style.fontSize=(Math.random()*20+10)+"px"
+document.body.appendChild(heart)
+
+setTimeout(()=>heart.remove(),6000)
+},300)
+
+/* sparkle */
+
+setInterval(()=>{
+let s=document.createElement("div")
+s.className="sparkle"
+s.style.left=Math.random()*100+"%"
+s.style.top=Math.random()*100+"%"
+document.body.appendChild(s)
+
+setTimeout(()=>s.remove(),2000)
+},200)
+
+/* music toggle */
+
+let music=document.getElementById("music")
+
+function toggleMusic(){
+if(music.paused){
+music.play()
+}else{
+music.pause()
+}
+}
+
+</script>
+
+</body>
+</html>
